@@ -1,0 +1,58 @@
+:root {
+    --text-colour: #051838;
+    --background-colour: #7688A9;
+    --primary-colour: #3C8D2F;
+    --primary-colour-shadow: #97D38D;
+    --secondary-colour: #AA6939;
+    --secondary-colour-shadow: #FFCEAA;
+}
+
+body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: var(--text-colour);
+    background: linear-gradient(to left top, var(--primary-colour-shadow), var(--background-colour));
+    margin: 20px;
+    padding-bottom: 150px;
+    display: grid;
+    justify-items: center;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+button {
+    appearance: none;
+    font-family: inherit;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+button.start {
+    padding: 10px 30px;
+    color: var(--background-colour);
+    background-color: var(--text-colour);
+    border: 2px solid var(--primary-colour);
+    box-shadow: 2px 2px 2px 2px var(--primary-colour-shadow);
+    border-radius: 20px;
+}
+
+button.start:hover {
+    color: inherit;
+    background-color: inherit;
+    border: 2px solid var(--secondary-colour);
+    box-shadow: 2px 2px 2px 2px var(--secondary-colour-shadow);
+}
+
+button.cell {
+    border: 2px solid var(--secondary-colour);
+}
+
+#gameboard {
+    width: 450px;
+    height: 450px;
+    grid-template-columns: repeat(3, 150px);
+    grid-template-rows: repeat(3, 150px);
+    display: grid;
+    gap: 5px;
+}
