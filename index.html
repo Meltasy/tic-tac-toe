@@ -9,8 +9,23 @@
 </head>
 <body>
     <h1>Tic tac toe</h1>
-    <button type="button" class="start">Start game</button>
-    <h2 class="results"></h2>
+    <div class="buttons">
+        <button type="button" id="start">New game</button>
+        <button type="button" id="players">Choose players</button>
+    </div>
+    <dialog>
+        <form method="dialog">
+            <label for="pOneName">Player 1 Name:</label>
+            <input type="text" id="pOneName" name="pOneName" />
+            <label for="pTwoName">Player 2 Name:</label>
+            <input type="text" id="pTwoName" name="pTwoName" />
+            <div class="btns">
+                <button type="submit" id="addBtn">Add players</button>
+                <button type="button" id="cancelBtn">Cancel</button>
+            </div>
+        </form>
+    </dialog>
+    <h2 id="results">Who's going to win?</h2>
     <div id="gameboard"></div>
 </body>
 </html>

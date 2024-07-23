@@ -1,24 +1,30 @@
 :root {
-    --text-colour: #051838;
-    --background-colour: #7688A9;
-    --primary-colour: #3C8D2F;
-    --primary-colour-shadow: #97D38D;
-    --secondary-colour: #AA6939;
-    --secondary-colour-shadow: #FFCEAA;
+    --text-colour: #001A11;
+    --background-colour: #B9D8CD;
+    --primary-colour: #2F4172;
+    --primary-colour-shadow: #65759E;
+    --secondary-colour: #759D34;
+    --secondary-colour-shadow: #B8D982;
 }
 
 body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 16px;
     color: var(--text-colour);
-    background: linear-gradient(to left top, var(--primary-colour-shadow), var(--background-colour));
+    background: radial-gradient(var(--secondary-colour), var(--primary-colour));
     margin: 20px;
-    padding-bottom: 150px;
+    padding-bottom: 100px;
     display: grid;
     justify-items: center;
 }
 
 h1 {
     font-size: 3rem;
+}
+
+.buttons {
+    display: flex;
+    justify-self: space-between;
 }
 
 button {
@@ -28,24 +34,57 @@ button {
     font-weight: 700;
 }
 
-button.start {
+.buttons button {
+    margin: 0 20px;
     padding: 10px 30px;
+    color: var(--text-colour);
+    background-color: var(--background-colour);
+    border: 2px solid var(--secondary-colour);
+    box-shadow: 2px 2px 2px 2px var(--secondary-colour-shadow);
+    border-radius: 20px;
+}
+
+.buttons button:hover {
     color: var(--background-colour);
     background-color: var(--text-colour);
     border: 2px solid var(--primary-colour);
     box-shadow: 2px 2px 2px 2px var(--primary-colour-shadow);
-    border-radius: 20px;
 }
 
-button.start:hover {
+::backdrop {
+    background-color: var(--secondary-colour-shadow);
+    opacity: 0.75;
+}
+
+:modal {
+    background-color: var(--background-colour);
+    border: 2px solid var(--primary-colour);
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 2px var(--primary-colour-shadow);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input,
+.btns button {
+    appearance: none;
+    font-family: inherit;
+    font-size: 100%;
     color: inherit;
-    background-color: inherit;
-    border: 2px solid var(--secondary-colour);
-    box-shadow: 2px 2px 2px 2px var(--secondary-colour-shadow);
+    padding: 5px 10px;
+    margin: 10px;
+    border: 2px solid var(--primary-colour);
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 2px var(--primary-colour-shadow);
 }
 
-button.cell {
-    border: 2px solid var(--secondary-colour);
+#results {
+    font-size: 2rem;
+    color: var(--primary-colour);
+    text-shadow: 2px 2px var(--primary-colour-shadow);
 }
 
 #gameboard {
@@ -55,4 +94,13 @@ button.cell {
     grid-template-rows: repeat(3, 150px);
     display: grid;
     gap: 5px;
+}
+
+#gameboard button {
+    font-size: 4rem;
+    color: var(--primary-colour);
+    text-shadow: 2px 2px var(--primary-colour-shadow);
+    background-color: var(--background-colour);
+    border: 2px solid var(--secondary-colour);
+    box-shadow: 2px 2px 2px 2px var(--secondary-colour-shadow);
 }

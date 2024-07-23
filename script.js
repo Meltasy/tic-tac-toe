@@ -1,3 +1,9 @@
+const choosePlayers = document.querySelector("#players")
+const dialog = document.querySelector("dialog");
+const form = document.querySelector("form");
+const addBtn = document.querySelector("#addBtn");
+const cancelBtn = document.querySelector("#cancelBtn");
+
 const createPlayer = (name, symbol) => {
     return {
         name: name,
@@ -5,32 +11,53 @@ const createPlayer = (name, symbol) => {
     };
 };
 
-const players = [
-    createPlayer("Melissa", "X"),
-    createPlayer("Guillaume", "O"),
-]
+let players = []
+
+choosePlayers.addEventListener("click", (e) => {
+    console.log("clicked");
+    dialog.showModal();
+});
+
+cancelBtn.addEventListener("click", (e) => {
+    console.log("clicked");
+    dialog.close();
+    form.reset();
+});
+
+addBtn.addEventListener("click", (e) => {
+    console.log("clicked");
+    e.preventDefault();
+    let pOneName = document.querySelector("#pOneName").value;
+    let pTwoName = document.querySelector("#pTwoName").value;
+    dialog.close();
+    form.reset();
+    players = [
+        createPlayer(pOneName, "X"),
+        createPlayer(pTwoName, "O"),
+    ]
+});
 
 const gameboard = (function () {
     const board = [];
     for (i = 0; i < 9; i++) {
-        board.push(0);
+        board.push(" ")
     };
     function resetBoard() {
         for (i = 0; i < board.length; i++) {
-            board[i] = 0;
+            board[i] = " "
         };
     };
     function getCurrentPlayer() {
         let emptyCells = 0;
-        board.forEach(function(item) {
-            if (item === 0) {
-                emptyCells += 1;
+        board.forEach((item) => {
+            if (item === " ") { 
+                emptyCells += 1
             };
         });
         if (emptyCells % 2 !== 0) {
-            return 0;
+            return 0
         } else {
-            return 1;
+            return 1
         };
     };
     const winningCombos = [
@@ -43,42 +70,42 @@ const gameboard = (function () {
         [0, 4, 8],
         [6, 4, 2]
     ]
-    const checkWinner = () => {
+    function checkWinner () {
         for(let i = 0; i < winningCombos.length; i++) {
             const [a, b, c] = winningCombos[i];
             if (board[a] === board[b] && board[b] === board[c] && board[c] === players[0].symbol) {
-                return 0;
+                return 0
             } else if (board[a] === board[b] && board[b] === board[c] && board[c] === players[1].symbol) {
-                return 1;
+                return 1
             };
         };
-        checkTie();
-    };
-    const checkTie = () => {
         let fullCells = 0;
         board.forEach(function(item) {
-            if (item !== 0) {
-                fullCells += 1;
+            if (item !== " ") {
+                fullCells += 1
             };
         });
         if (fullCells === 9) {
-            return 2;
+            return 2
         };
     };
-    return { board, resetBoard, getCurrentPlayer, checkWinner, checkTie };
+    return { board, resetBoard, getCurrentPlayer, checkWinner };
 })();
 
 const playGame = (function () {
-    function startGame() {
-        const startBtn = document.querySelector(".start");
+    function newGame() {
+        const startBtn = document.querySelector("#start");
         startBtn.addEventListener("click", (e) => {
             gameboard.resetBoard();
+            if (players.length === 0) {
+                dialog.showModal();
+            }
             updateDisplay();
         });
     }
-    startGame();
+    newGame();
     function playRound(cellNum) {
-        if (gameboard.board[cellNum] === 0) {
+        if (gameboard.board[cellNum] === " ") {
             gameboard.board.splice(cellNum, 1, players[gameboard.getCurrentPlayer()].symbol);
             gameboard.checkWinner();
         };
@@ -88,33 +115,35 @@ const playGame = (function () {
 })();
 
 const updateDisplay = function() {
-    let game = document.querySelector("#gameboard");
+    const game = document.querySelector("#gameboard");
     while (game.firstChild) {
-        game.removeChild(game.lastChild);
+        game.removeChild(game.lastChild)
     };
     for (i = 0; i < gameboard.board.length; i++) {
-        createGameboard(gameboard.board[i], i);
+        createGameboard(gameboard.board[i], i)
     };
     function createGameboard(cellValue, cellNum) {
-        let cell = document.createElement("button");
+        const cell = document.createElement("button");
+        const results = document.querySelector("#results");
+        cell.disabled = false;
+        results.textContent = "Who's going to win?";
         cell.textContent = `${cellValue}`;
         cell.addEventListener("click", (e) => {
             playGame.playRound(cellNum);
             updateDisplay();
-            if (gameboard.checkWinner() === 0) {
-                alert(`${players[0].name} is the winner!`);
-                gameboard.resetBoard();
-                updateDisplay();
-            } else if (gameboard.checkWinner() === 1) {
-                alert(`${players[1].name} is the winner!`);
-                gameboard.resetBoard();
-                updateDisplay();
-            } else if (gameboard.checkTie() === 2) {
-                alert("It's a tie!");
-                gameboard.resetBoard();
-                updateDisplay();
-            };
         });
         game.appendChild(cell);
+        if (players.length === 2) {
+            if (gameboard.checkWinner() === 0) {
+                results.textContent = `${players[0].name} is the winner!`;
+                cell.disabled = true;
+            } else if (gameboard.checkWinner() === 1) {
+                results.textContent = `${players[1].name} is the winner!`;
+                cell.disabled = true;
+            } else if (gameboard.checkWinner() === 2) {
+                results.textContent = "It's a tie!";
+                cell.disabled = true;
+            };
+        }
     }
 };
