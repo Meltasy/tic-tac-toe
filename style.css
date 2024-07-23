@@ -58,8 +58,8 @@ button {
 
 :modal {
     background-color: var(--background-colour);
-    border: 2px solid var(--primary-colour);
     border-radius: 10px;
+    border: 2px solid var(--primary-colour);
     box-shadow: 2px 2px 2px 2px var(--primary-colour-shadow);
 }
 
@@ -73,16 +73,24 @@ input,
     appearance: none;
     font-family: inherit;
     font-size: 100%;
-    color: inherit;
+    color: var(--text-colour);
     padding: 5px 10px;
     margin: 10px;
-    border: 2px solid var(--primary-colour);
     border-radius: 10px;
+    border: 2px solid var(--primary-colour);
     box-shadow: 2px 2px 2px 2px var(--primary-colour-shadow);
+}
+
+input:focus,
+.btns button:hover {
+    outline: none;
+    border: 2px solid var(--secondary-colour);
+    box-shadow: 2px 2px 2px 2px var(--secondary-colour-shadow);
 }
 
 #results {
     font-size: 2rem;
+    font-weight: 700;
     color: var(--primary-colour);
     text-shadow: 2px 2px var(--primary-colour-shadow);
 }

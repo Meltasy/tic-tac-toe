@@ -1,41 +1,37 @@
-const choosePlayers = document.querySelector("#players")
-const dialog = document.querySelector("dialog");
-const form = document.querySelector("form");
-const addBtn = document.querySelector("#addBtn");
-const cancelBtn = document.querySelector("#cancelBtn");
-
-const createPlayer = (name, symbol) => {
-    return {
-        name: name,
-        symbol: symbol,
-    };
-};
-
 let players = []
 
-choosePlayers.addEventListener("click", (e) => {
-    console.log("clicked");
-    dialog.showModal();
-});
-
-cancelBtn.addEventListener("click", (e) => {
-    console.log("clicked");
-    dialog.close();
-    form.reset();
-});
-
-addBtn.addEventListener("click", (e) => {
-    console.log("clicked");
-    e.preventDefault();
-    let pOneName = document.querySelector("#pOneName").value;
-    let pTwoName = document.querySelector("#pTwoName").value;
-    dialog.close();
-    form.reset();
-    players = [
-        createPlayer(pOneName, "X"),
-        createPlayer(pTwoName, "O"),
-    ]
-});
+const getPlayers = (function () {
+    const createPlayer = (name, symbol) => {
+        return {
+            name: name,
+            symbol: symbol,
+        };
+    };
+    const choosePlayers = document.querySelector("#players")
+    const dialog = document.querySelector("dialog");
+    const form = document.querySelector("form");
+    const addBtn = document.querySelector("#addBtn");
+    const cancelBtn = document.querySelector("#cancelBtn");
+    choosePlayers.addEventListener("click", () => {
+        dialog.showModal();
+    });
+        cancelBtn.addEventListener("click", () => {
+        dialog.close();
+        form.reset();
+    });
+        addBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        let pOneName = document.querySelector("#pOneName").value;
+        let pTwoName = document.querySelector("#pTwoName").value;
+        dialog.close();
+        form.reset();
+        players = [
+            createPlayer(pOneName, "X"),
+            createPlayer(pTwoName, "O"),
+        ]
+    });
+    return { dialog };
+})();
 
 const gameboard = (function () {
     const board = [];
@@ -95,11 +91,11 @@ const gameboard = (function () {
 const playGame = (function () {
     function newGame() {
         const startBtn = document.querySelector("#start");
-        startBtn.addEventListener("click", (e) => {
+        startBtn.addEventListener("click", () => {
             gameboard.resetBoard();
             if (players.length === 0) {
-                dialog.showModal();
-            }
+                getPlayers.dialog.showModal();
+            };
             updateDisplay();
         });
     }
@@ -126,9 +122,11 @@ const updateDisplay = function() {
         const cell = document.createElement("button");
         const results = document.querySelector("#results");
         cell.disabled = false;
-        results.textContent = "Who's going to win?";
+        if (players.length === 2) {
+            results.textContent = `${players[gameboard.getCurrentPlayer()].name}'s turn!`
+        };
         cell.textContent = `${cellValue}`;
-        cell.addEventListener("click", (e) => {
+        cell.addEventListener("click", () => {
             playGame.playRound(cellNum);
             updateDisplay();
         });
@@ -144,6 +142,6 @@ const updateDisplay = function() {
                 results.textContent = "It's a tie!";
                 cell.disabled = true;
             };
-        }
-    }
+        };
+    };
 };
