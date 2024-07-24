@@ -1,5 +1,9 @@
 let players = []
 
+window.addEventListener("load", () => {
+    getPlayers.dialog.showModal();
+});
+
 const getPlayers = (function () {
     const createPlayer = (name, symbol) => {
         return {
@@ -15,11 +19,11 @@ const getPlayers = (function () {
     choosePlayers.addEventListener("click", () => {
         dialog.showModal();
     });
-        cancelBtn.addEventListener("click", () => {
+    cancelBtn.addEventListener("click", () => {
         dialog.close();
         form.reset();
     });
-        addBtn.addEventListener("click", (e) => {
+    addBtn.addEventListener("click", (e) => {
         e.preventDefault();
         let pOneName = document.querySelector("#pOneName").value;
         let pTwoName = document.querySelector("#pTwoName").value;
@@ -29,6 +33,8 @@ const getPlayers = (function () {
             createPlayer(pOneName, "X"),
             createPlayer(pTwoName, "O"),
         ]
+        gameboard.resetBoard();
+        updateDisplay();
     });
     return { dialog };
 })();
@@ -93,9 +99,6 @@ const playGame = (function () {
         const startBtn = document.querySelector("#start");
         startBtn.addEventListener("click", () => {
             gameboard.resetBoard();
-            if (players.length === 0) {
-                getPlayers.dialog.showModal();
-            };
             updateDisplay();
         });
     }
@@ -122,26 +125,22 @@ const updateDisplay = function() {
         const cell = document.createElement("button");
         const results = document.querySelector("#results");
         cell.disabled = false;
-        if (players.length === 2) {
-            results.textContent = `${players[gameboard.getCurrentPlayer()].name}'s turn!`
-        };
+        results.textContent = `${players[gameboard.getCurrentPlayer()].name}'s turn!`
         cell.textContent = `${cellValue}`;
         cell.addEventListener("click", () => {
             playGame.playRound(cellNum);
             updateDisplay();
         });
         game.appendChild(cell);
-        if (players.length === 2) {
-            if (gameboard.checkWinner() === 0) {
-                results.textContent = `${players[0].name} is the winner!`;
-                cell.disabled = true;
-            } else if (gameboard.checkWinner() === 1) {
-                results.textContent = `${players[1].name} is the winner!`;
-                cell.disabled = true;
-            } else if (gameboard.checkWinner() === 2) {
-                results.textContent = "It's a tie!";
-                cell.disabled = true;
-            };
+        if (gameboard.checkWinner() === 0) {
+            results.textContent = `${players[0].name} is the winner!`;
+            cell.disabled = true;
+        } else if (gameboard.checkWinner() === 1) {
+            results.textContent = `${players[1].name} is the winner!`;
+            cell.disabled = true;
+        } else if (gameboard.checkWinner() === 2) {
+            results.textContent = "It's a tie!";
+            cell.disabled = true;
         };
     };
 };

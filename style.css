@@ -1,5 +1,6 @@
 :root {
     --text-colour: #001A11;
+    --text-colour-shadow: #267257;
     --background-colour: #B9D8CD;
     --primary-colour: #2F4172;
     --primary-colour-shadow: #65759E;
@@ -10,6 +11,7 @@
 body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 16px;
+    font-weight: 700;
     color: var(--text-colour);
     background: radial-gradient(var(--secondary-colour), var(--primary-colour));
     margin: 20px;
@@ -20,6 +22,7 @@ body {
 
 h1 {
     font-size: 3rem;
+    text-shadow: 2px 2px var(--text-colour-shadow);
 }
 
 .buttons {
@@ -66,6 +69,7 @@ button {
 form {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 input,
@@ -74,25 +78,37 @@ input,
     font-family: inherit;
     font-size: 100%;
     color: var(--text-colour);
-    padding: 5px 10px;
-    margin: 10px;
+    background-color: var(--background-colour);
+    padding: 10px 20px;
     border-radius: 10px;
     border: 2px solid var(--primary-colour);
     box-shadow: 2px 2px 2px 2px var(--primary-colour-shadow);
 }
 
+input {
+    outline: none;
+    font-weight: 700;
+    margin: 10px 0;
+}
+
+.btns button {
+    margin: 10px;
+}
+
 input:focus,
 .btns button:hover {
-    outline: none;
     border: 2px solid var(--secondary-colour);
     box-shadow: 2px 2px 2px 2px var(--secondary-colour-shadow);
 }
 
+.btns button:hover {
+    color: var(--background-colour);
+    background-color: var(--text-colour);
+}
+
 #results {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--primary-colour);
-    text-shadow: 2px 2px var(--primary-colour-shadow);
+    font-size: 2.2rem;
+    text-shadow: 2px 2px var(--text-colour-shadow);
 }
 
 #gameboard {
@@ -101,13 +117,13 @@ input:focus,
     grid-template-columns: repeat(3, 150px);
     grid-template-rows: repeat(3, 150px);
     display: grid;
-    gap: 5px;
+    gap: 10px;
 }
 
 #gameboard button {
     font-size: 4rem;
-    color: var(--primary-colour);
-    text-shadow: 2px 2px var(--primary-colour-shadow);
+    color: var(--text-colour);
+    text-shadow: 2px 2px var(--text-colour-shadow);
     background-color: var(--background-colour);
     border: 2px solid var(--secondary-colour);
     box-shadow: 2px 2px 2px 2px var(--secondary-colour-shadow);
